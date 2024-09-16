@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: CafeMenu
+  datasource:
+    url: jdbc:postgresql://localhost:5432/CafeMenum
+    username: postgres
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
