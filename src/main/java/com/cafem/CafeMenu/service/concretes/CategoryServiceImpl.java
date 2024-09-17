@@ -36,11 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public UpdateCategoryResponse updateCategory(UpdateCategoryRequest request, int id) {
-        Optional<Category> optionalategory = categoryRepositories.findById(id);
-        if (optionalategory.isEmpty()) {
+        Optional<Category> optionalCategory = categoryRepositories.findById(id);
+        if (optionalCategory.isEmpty()) {
             throw new RuntimeException("Category not found");
         }
-        Category existingCategory = optionalategory.get();
+        Category existingCategory = optionalCategory.get();
 
         Category category = CategoryMapping.INSTANCE.UpdateCategory(request,existingCategory);
         Category savedCategory = categoryRepositories.save(category);
