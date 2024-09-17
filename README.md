@@ -6,10 +6,10 @@ Front end kodları .Net Core MVC ile yazılmıştır. Reposuna ulaşmak için : 
 ##Proje Görselleri
 
 ## Hakkında Sayfası
-![About Sayfası](https://raw.githubusercontent.com/oguzhansecgel/QRCafeMenu-DotNetMVC/master/Recipe.UI/wwwroot/about.png?token=GHSAT0AAAAAACN2GM7AXBD6EXZDOFP2U4NGZXJP4FQ)
+![About Sayfası](https://raw.githubusercontent.com/oguzhansecgel/QRCafeMenu-DotNetMVC/master/Recipe.UI/wwwroot/about.png)
 
 ## Menü Sayfası
-![Menü Sayfası](https://raw.githubusercontent.com/oguzhansecgel/QRCafeMenu-DotNetMVC/master/Recipe.UI/wwwroot/menu.png?token=GHSAT0AAAAAACN2GM7AZ7B72RI2QEN444TUZXJP5BA)
+![Menü Sayfası](https://raw.githubusercontent.com/oguzhansecgel/QRCafeMenu-DotNetMVC/master/Recipe.UI/wwwroot/menu.png)
 
 ## API Uç Noktaları
 
