@@ -1,9 +1,11 @@
 package com.cafem.CafeMenu.controller;
 
 import com.cafem.CafeMenu.dto.request.food.CreateFoodRequest;
+import com.cafem.CafeMenu.dto.request.food.UpdateFoodRequest;
 import com.cafem.CafeMenu.dto.response.food.CreateFoodResponse;
 import com.cafem.CafeMenu.dto.response.food.GetAllFoodResponse;
 import com.cafem.CafeMenu.dto.response.food.GetFoodWithCategoryResponse;
+import com.cafem.CafeMenu.dto.response.food.UpdateFoodResponse;
 import com.cafem.CafeMenu.service.abstracts.FoodService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +34,10 @@ public class FoodController {
     public CreateFoodResponse createFood(@RequestBody CreateFoodRequest request)
     {
         return foodService.createFood(request);
+    }
+    @PutMapping("/updateFood/{id}")
+    public UpdateFoodResponse updateFood(@PathVariable int id, @RequestBody UpdateFoodRequest request)
+    {
+        return foodService.updateFood(request,id);
     }
 }

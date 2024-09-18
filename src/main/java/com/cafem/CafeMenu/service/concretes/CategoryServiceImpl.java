@@ -11,6 +11,7 @@ import com.cafem.CafeMenu.mapper.CategoryMapping;
 import com.cafem.CafeMenu.repositories.CategoryRepositories;
 import com.cafem.CafeMenu.service.abstracts.CategoryService;
 import org.springframework.stereotype.Service;
+import org.turkcell.tcell.exception.exceptions.type.BaseBusinessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     public UpdateCategoryResponse updateCategory(UpdateCategoryRequest request, int id) {
         Optional<Category> optionalCategory = categoryRepositories.findById(id);
         if (optionalCategory.isEmpty()) {
-            throw new RuntimeException("Category not found");
+            throw new BaseBusinessException("Category not found");
         }
         Category existingCategory = optionalCategory.get();
 

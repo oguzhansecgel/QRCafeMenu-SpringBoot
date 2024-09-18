@@ -9,6 +9,7 @@ import com.cafem.CafeMenu.mapper.FoodMapping;
 import com.cafem.CafeMenu.repositories.FoodRepositories;
 import com.cafem.CafeMenu.service.abstracts.FoodService;
 import org.springframework.stereotype.Service;
+import org.turkcell.tcell.exception.exceptions.type.BaseBusinessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +60,19 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public UpdateFoodResponse updateFood(UpdateFoodRequest request, int id) {
-        return null;
+        Optional<Food> optionalFood = foodRepositories.findById(id);
+        if (optionalFood.isEmpty())
+        {
+            throw new BaseBusinessException("Food not found");
+        }
+        Food existingFood = optionalFood.get();
+        Food food = FoodMapping.INSTANCE.updateFood(request, existingFood);
+        Food savedFood = foodRepositories.save(food);
+        return new UpdateFoodResponse( savedFood.getId(),
+                savedFood.getFoodName(),
+                savedFood.getFoodDescription(),
+                savedFood.getFoodPrice(),
+                savedFood.getCategory().getId());
     }
 
     @Override
