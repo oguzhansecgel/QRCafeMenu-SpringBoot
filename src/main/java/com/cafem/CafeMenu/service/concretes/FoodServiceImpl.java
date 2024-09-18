@@ -31,7 +31,13 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Optional<GetByIdFoodResponse> getByIdFood(int id) {
-        return Optional.empty();
+        Optional<Food> food = foodRepositories.findById(id);
+        if (food.isEmpty())
+        {
+            throw new BaseBusinessException("Not found");
+        }
+
+        return food.map(FoodMapping.INSTANCE::getByIdFood);
     }
 
     @Override

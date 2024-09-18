@@ -29,6 +29,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.login>sqa_e5d3dae261600ed2f340e5818e2141b96f8d420b</sonar.login>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -102,6 +104,11 @@
 			<artifactId>micrometer-registry-prometheus</artifactId>
 			<version>1.9.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.sonarsource.scanner.maven</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>4.0.0.4121</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -143,6 +150,11 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>4.0.0.4121</version>
 			</plugin>
 		</plugins>
 	</build>
