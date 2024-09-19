@@ -2,7 +2,6 @@ package com.cafem.CafeMenu.mapper;
 
 import com.cafem.CafeMenu.dto.request.contact.CreateContactRequest;
 import com.cafem.CafeMenu.dto.request.contact.UpdateContactRequest;
-import com.cafem.CafeMenu.dto.response.category.GetAllCategoryResponse;
 import com.cafem.CafeMenu.dto.response.contact.GetAllContactResponse;
 import com.cafem.CafeMenu.dto.response.contact.GetByIdContactResponse;
 import com.cafem.CafeMenu.entities.Contact;

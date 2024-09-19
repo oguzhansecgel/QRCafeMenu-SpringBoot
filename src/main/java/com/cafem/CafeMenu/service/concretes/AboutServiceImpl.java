@@ -1,5 +1,7 @@
 package com.cafem.CafeMenu.service.concretes;
 
+import com.cafem.CafeMenu.core.constant.AboutConstant;
+import com.cafem.CafeMenu.core.exception.exceptionhandler.AboutNotFoundException;
 import com.cafem.CafeMenu.dto.request.about.CreateAboutRequest;
 import com.cafem.CafeMenu.dto.request.about.UpdateAboutRequest;
 import com.cafem.CafeMenu.dto.response.about.CreateAboutResponse;
@@ -11,7 +13,6 @@ import com.cafem.CafeMenu.mapper.AboutMapping;
 import com.cafem.CafeMenu.repositories.AboutRepositories;
 import com.cafem.CafeMenu.service.abstracts.AboutService;
 import org.springframework.stereotype.Service;
-import org.turkcell.tcell.exception.exceptions.type.BaseBusinessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class AboutServiceImpl implements AboutService {
         Optional<About> about = aboutRepositories.findById(id);
         if (about.isEmpty())
         {
-            throw new BaseBusinessException("No about with id " + id + " found");
+            throw new AboutNotFoundException(AboutConstant.ABOUT_NOT_FOUND_MESSAGE);
         }
         return about.map(AboutMapping.INSTANCE::getByIdAbout);
     }
@@ -52,7 +53,7 @@ public class AboutServiceImpl implements AboutService {
     public UpdateAboutResponse updateAbout(UpdateAboutRequest request, int id) {
         Optional<About> optionalAbout = aboutRepositories.findById(id);
         if (optionalAbout.isEmpty()) {
-            throw new BaseBusinessException("About not found");
+            throw new AboutNotFoundException(AboutConstant.ABOUT_NOT_FOUND_MESSAGE);
         }
         About existingAbout = optionalAbout.get();
         About about = AboutMapping.INSTANCE.updateAbout(request, existingAbout);
@@ -62,8 +63,9 @@ public class AboutServiceImpl implements AboutService {
 
     @Override
     public void deleteAbout(int id) {
-        About existingAbout = aboutRepositories.findById(id)
-                .orElseThrow(()-> new BaseBusinessException("About not found"));
+        Optional<About> about =  aboutRepositories.findById(id);
+        if(about.isEmpty())
+            throw new AboutNotFoundException(AboutConstant.ABOUT_NOT_FOUND_MESSAGE);
         aboutRepositories.deleteById(id);
     }
 }

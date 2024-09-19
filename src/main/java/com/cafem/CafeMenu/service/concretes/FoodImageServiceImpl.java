@@ -1,5 +1,9 @@
 package com.cafem.CafeMenu.service.concretes;
 
+import com.cafem.CafeMenu.core.constant.FoodConstant;
+import com.cafem.CafeMenu.core.constant.FoodImageConstant;
+import com.cafem.CafeMenu.core.exception.exceptionhandler.FoodImageNotFoundException;
+import com.cafem.CafeMenu.core.exception.exceptionhandler.FoodNotFoundException;
 import com.cafem.CafeMenu.dto.request.foodImage.CreateFoodImageRequest;
 import com.cafem.CafeMenu.dto.response.foodImage.CreateFoodImageResponse;
 import com.cafem.CafeMenu.dto.response.foodImage.GetAllFoodImageResponse;
@@ -23,7 +27,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FoodImageServiceImpl implements FoodImageService {
@@ -59,11 +62,11 @@ public class FoodImageServiceImpl implements FoodImageService {
             Files.write(filePath, imageFile.getBytes());
 
             if (foodImageRepositories.existsByFoodId(request.getFoodId())) {
-                throw new BaseBusinessException("An image for this food already exists.");
+                throw new FoodImageNotFoundException(FoodImageConstant.FOOD_IMAGE_NOT_FOUND_MESSAGE);
             }
 
             Food food = foodRepositories.findById(request.getFoodId())
-                    .orElseThrow(() -> new BaseBusinessException("Food not found"));
+                    .orElseThrow(() -> new FoodNotFoundException(FoodConstant.FOOD_NOT_FOUND_MESSAGE));
 
             FoodImage foodImage = FoodImageMapping.INSTANCE.createFoodImage(request);
             foodImage.setImageUrl(filePath.toString());
@@ -80,7 +83,7 @@ public class FoodImageServiceImpl implements FoodImageService {
     @Override
     public void deletedImage(int foodImageId) {
         FoodImage foodImage = foodImageRepositories.findById(foodImageId)
-                .orElseThrow(() -> new BaseBusinessException("Food image not found"));
+                .orElseThrow(() -> new  FoodImageNotFoundException(FoodImageConstant.FOOD_IMAGE_NOT_FOUND_MESSAGE));
 
         String filePath = foodImage.getImageUrl();
         Path path = Paths.get(filePath);

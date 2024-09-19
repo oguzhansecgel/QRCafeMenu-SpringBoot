@@ -1,5 +1,7 @@
 package com.cafem.CafeMenu.service.concretes;
 
+import com.cafem.CafeMenu.core.constant.CategoryConstant;
+import com.cafem.CafeMenu.core.exception.exceptionhandler.CategoryNotFoundException;
 import com.cafem.CafeMenu.dto.request.category.CreateCategoryRequest;
 import com.cafem.CafeMenu.dto.request.category.UpdateCategoryRequest;
 import com.cafem.CafeMenu.dto.response.category.CreateCategoryResponse;
@@ -11,7 +13,6 @@ import com.cafem.CafeMenu.mapper.CategoryMapping;
 import com.cafem.CafeMenu.repositories.CategoryRepositories;
 import com.cafem.CafeMenu.service.abstracts.CategoryService;
 import org.springframework.stereotype.Service;
-import org.turkcell.tcell.exception.exceptions.type.BaseBusinessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CreateCategoryResponse createCategory(CreateCategoryRequest request) {
-        Category category = CategoryMapping.INSTANCE.CategoryToCategory(request);
+        Category category = CategoryMapping.INSTANCE.categoryToCategory(request);
         Category savedCategory = categoryRepositories.save(category);
         return new CreateCategoryResponse(
                 savedCategory.getId(),
@@ -39,11 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
     public UpdateCategoryResponse updateCategory(UpdateCategoryRequest request, int id) {
         Optional<Category> optionalCategory = categoryRepositories.findById(id);
         if (optionalCategory.isEmpty()) {
-            throw new BaseBusinessException("Category not found");
+            throw new CategoryNotFoundException(CategoryConstant.CATEGORY_NOT_FOUND_MESSAGE);
         }
         Category existingCategory = optionalCategory.get();
 
-        Category category = CategoryMapping.INSTANCE.UpdateCategory(request,existingCategory);
+        Category category = CategoryMapping.INSTANCE.updateCategory(request,existingCategory);
         Category savedCategory = categoryRepositories.save(category);
         return new UpdateCategoryResponse(
                 savedCategory.getId(),
@@ -61,13 +62,16 @@ public class CategoryServiceImpl implements CategoryService {
     public Optional<GetByIdCategoryResponse> findCategoryById(int id) {
         Optional<Category> category = categoryRepositories.findById(id);
         if (category.isEmpty()) {
-            throw new RuntimeException("Category not found");
+            throw new CategoryNotFoundException(CategoryConstant.CATEGORY_NOT_FOUND_MESSAGE);
         }
         return category.map(CategoryMapping.INSTANCE::getCategoryById);
     }
 
     @Override
     public void deleteCategory(int id) {
+        Optional<Category> category = categoryRepositories.findById(id);
+        if(category.isEmpty())
+            throw new CategoryNotFoundException(CategoryConstant.CATEGORY_NOT_FOUND_MESSAGE);
         categoryRepositories.deleteById(id);
     }
 }

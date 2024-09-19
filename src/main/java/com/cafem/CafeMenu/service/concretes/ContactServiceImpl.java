@@ -1,5 +1,7 @@
 package com.cafem.CafeMenu.service.concretes;
 
+import com.cafem.CafeMenu.core.constant.ContactConstant;
+import com.cafem.CafeMenu.core.exception.exceptionhandler.ContactNotFoundException;
 import com.cafem.CafeMenu.dto.request.contact.CreateContactRequest;
 import com.cafem.CafeMenu.dto.request.contact.UpdateContactRequest;
 import com.cafem.CafeMenu.dto.response.contact.CreateContactResponse;
@@ -35,7 +37,7 @@ public class ContactServiceImpl implements ContactService {
     public Optional<GetByIdContactResponse> getByIdContact(int id) {
         Optional<Contact> contact = contactRepositories.findById(id);
         if (contact.isEmpty()) {
-            throw new BaseBusinessException("No contact with id " + id + " found");
+            throw new ContactNotFoundException(ContactConstant.CONTACT_NOT_FOUND_MESSAGE);
         }
         return contact.map(ContactMapping.INSTANCE::getByIdContact);
     }
@@ -51,7 +53,7 @@ public class ContactServiceImpl implements ContactService {
     public UpdateContactResponse updateContact(UpdateContactRequest request, int id) {
         Optional<Contact> optionalContact = contactRepositories.findById(id);
         if (optionalContact.isEmpty()) {
-            throw new BaseBusinessException("Contact not found");
+            throw new ContactNotFoundException(ContactConstant.CONTACT_NOT_FOUND_MESSAGE);
         }
         Contact existingContact = optionalContact.get();
         Contact contact = ContactMapping.INSTANCE.updateContact(request, existingContact);
@@ -61,8 +63,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void deleteContact(int id) {
-        Contact existingContact = contactRepositories.findById(id)
-                .orElseThrow(() -> new BaseBusinessException("Contact not found"));
+        Optional<Contact> contact = contactRepositories.findById(id);
+        if (contact.isEmpty())
+            throw new ContactNotFoundException(ContactConstant.CONTACT_NOT_FOUND_MESSAGE);
         contactRepositories.deleteById(id);
     }
 }

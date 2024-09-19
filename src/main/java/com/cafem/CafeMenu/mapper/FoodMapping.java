@@ -25,7 +25,7 @@ public interface FoodMapping {
 
     @Mapping(source = "category.id",target = "categoryId")
     GetAllFoodResponse getAllFoodMapper(Food food);
-    List<GetAllFoodResponse> foodToListFoodResponse(List<Food> Food);
+    List<GetAllFoodResponse> foodToListFoodResponse(List<Food> food);
 
     @Mapping(source = "category.id", target = "categoryId")
     GetFoodWithCategoryResponse foodToGetFoodWithCategoryResponse(Food food);

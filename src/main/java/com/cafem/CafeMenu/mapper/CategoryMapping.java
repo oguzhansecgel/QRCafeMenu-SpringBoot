@@ -17,8 +17,8 @@ public interface CategoryMapping {
 
     CategoryMapping INSTANCE = Mappers.getMapper(CategoryMapping.class);
 
-    Category CategoryToCategory(CreateCategoryRequest request);
-    Category UpdateCategory(UpdateCategoryRequest request, @MappingTarget Category category);
+    Category categoryToCategory(CreateCategoryRequest request);
+    Category updateCategory(UpdateCategoryRequest request, @MappingTarget Category category);
     GetByIdCategoryResponse getCategoryById(Category category);
 
     @Mapping(source = "id",target = "id")

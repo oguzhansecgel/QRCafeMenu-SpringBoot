@@ -1,5 +1,6 @@
 package com.cafem.CafeMenu.service.concretes;
 
+import com.cafem.CafeMenu.core.exception.exceptionhandler.FoodNotFoundException;
 import com.cafem.CafeMenu.dto.request.food.CreateFoodRequest;
 import com.cafem.CafeMenu.dto.request.food.UpdateFoodRequest;
 import com.cafem.CafeMenu.dto.response.food.*;
@@ -34,7 +35,7 @@ public class FoodServiceImpl implements FoodService {
         Optional<Food> food = foodRepositories.findById(id);
         if (food.isEmpty())
         {
-            throw new BaseBusinessException("Not found");
+            throw new FoodNotFoundException("Not found");
         }
 
         return food.map(FoodMapping.INSTANCE::getByIdFood);
@@ -45,7 +46,7 @@ public class FoodServiceImpl implements FoodService {
         Optional<Food> existingFood = foodRepositories.findById(id);
         if (existingFood.isEmpty())
         {
-            throw new RuntimeException("Food not found");
+            throw new FoodNotFoundException("Food not found");
         }
         foodRepositories.deleteById(id);
     }
@@ -69,7 +70,7 @@ public class FoodServiceImpl implements FoodService {
         Optional<Food> optionalFood = foodRepositories.findById(id);
         if (optionalFood.isEmpty())
         {
-            throw new BaseBusinessException("Food not found");
+            throw new FoodNotFoundException("Food not found");
         }
         Food existingFood = optionalFood.get();
         Food food = FoodMapping.INSTANCE.updateFood(request, existingFood);
