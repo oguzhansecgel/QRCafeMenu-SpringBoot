@@ -3,7 +3,7 @@
 Bu proje, Spring Boot kullanılarak geliştirilmiş bir QR kod tabanlı kafe menü uygulamasının backend kısmını içerir. Proje, menüler, kategoriler, yiyecekler ve iletişim bilgileri gibi kısımları yönetmeye yönelik RESTful API'ler sağlar. API uç noktaları aşağıda açıklanmıştır.
 Front end kodları .Net Core MVC ile yazılmıştır. Reposuna ulaşmak için : https://github.com/oguzhansecgel/QRCafeMenu-DotNetMVC
 
-##Proje Görselleri
+#Proje Görselleri
 
 ## Hakkında Sayfası
 ![About Sayfası](https://raw.githubusercontent.com/oguzhansecgel/QRCafeMenu-DotNetMVC/master/Recipe.UI/wwwroot/about.png)
